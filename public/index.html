@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>AR Science Lab • แยกสาร ป.6</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button id="adminBtn" class="icon-btn" aria-label="จัดการระบบ">☰</button>
+      <div class="brand">
+        <div class="brand-title" id="siteName">AR Science Lab • แยกสาร ป.6</div>
+        <div class="brand-subtitle" id="siteSubtitle">เกม AR ฝึกทักษะการแยกสารด้วยมือ</div>
+      </div>
+      <div class="top-status" id="statusPill">พร้อมเล่น</div>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen active">
+        <div class="hero-card">
+          <span class="eyebrow">AR SCIENCE • GRADE 6</span>
+          <h1>ภารกิจแยกสาร</h1>
+          <p>ใช้มือชี้จุดสีไปยังคำตอบที่ถูกต้อง แล้วกำมือค้างเพื่อเลือก</p>
+          <div class="info-row">
+            <div><strong>20</strong><span>ด่าน</span></div>
+            <div><strong>200</strong><span>ข้อ</span></div>
+            <div><strong>AR Hand</strong><span>ควบคุมด้วยมือ</span></div>
+          </div>
+        </div>
+        <div class="section-head"><div><span class="eyebrow">MISSION MAP</span><h2>เลือกด่าน</h2></div><span id="stageCountLabel" class="muted"></span></div>
+        <div id="stageGrid" class="stage-grid"></div>
+      </section>
+
+      <section id="gameScreen" class="screen game-screen">
+        <div class="ar-stage">
+          <video id="camera" autoplay playsinline muted></video>
+          <canvas id="arCanvas"></canvas>
+          <div class="game-hud">
+            <div class="hud-chip" id="stageLabel">ด่าน 1</div>
+            <div class="hud-question" id="questionLabel">ข้อ 1 / 10</div>
+            <div class="hud-chip score" id="scoreLabel">คะแนน 0</div>
+          </div>
+          <div class="question-panel" id="questionPanel">
+            <div class="question-meta" id="questionMeta">ด่านที่ 1 • ข้อที่ 1</div>
+            <div class="question-text" id="questionText">กำลังโหลดโจทย์…</div>
+          </div>
+          <div class="hand-guide" id="handGuide">
+            <span class="guide-dot"></span>
+            วางจุดสีบนคำตอบ แล้วกำมือเพื่อเลือก
+          </div>
+          <div class="ar-toast" id="arToast"></div>
+          <button id="exitGameBtn" class="floating-exit">ออกจากด่าน</button>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="screen result-screen">
+        <div class="result-card">
+          <div class="result-icon">✦</div>
+          <span class="eyebrow">MISSION COMPLETE</span>
+          <h1 id="resultTitle">จบด่าน</h1>
+          <p id="resultSubtitle">สรุปผลการทำแบบฝึก</p>
+          <div class="result-score"><span id="finalScore">0</span><small>/ 10 คะแนน</small></div>
+          <div class="result-stats">
+            <div><strong id="correctCount">0</strong><span>ข้อถูก</span></div>
+            <div><strong id="wrongCount">0</strong><span>ข้อผิด</span></div>
+            <div><strong id="accuracyCount">0%</strong><span>ความแม่นยำ</span></div>
+          </div>
+          <div class="answer-review" id="answerReview"></div>
+          <div class="result-actions"><button id="retryBtn" class="primary-btn">เล่นด่านนี้อีกครั้ง</button><button id="stageMenuBtn" class="secondary-btn">กลับเลือกด่าน</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="cameraModal" class="modal hidden">
+    <div class="modal-card compact">
+      <button class="modal-close" data-close="cameraModal">×</button>
+      <span class="eyebrow">CAMERA ACCESS</span>
+      <h2>เปิดกล้องเพื่อเล่น AR</h2>
+      <p>เกมต้องใช้กล้องและการตรวจจับมือบนอุปกรณ์ของคุณ ควรเปิดผ่าน HTTPS เพื่อให้เบราว์เซอร์อนุญาตการใช้กล้อง</p>
+      <button id="cameraStartBtn" class="primary-btn">เปิดกล้องและเริ่มด่าน</button>
+      <div class="small-note" id="cameraError"></div>
+    </div>
+  </div>
+
+  <div id="adminLoginModal" class="modal hidden">
+    <div class="modal-card compact">
+      <button class="modal-close" data-close="adminLoginModal">×</button>
+      <span class="eyebrow">SYSTEM ADMIN</span>
+      <h2>เข้าสู่การจัดการระบบ</h2>
+      <p>กรอกรหัสผู้ดูแลเพื่อเข้าเมนูแก้ไขเกม</p>
+      <input id="adminPassword" class="text-input" type="password" inputmode="numeric" autocomplete="current-password" placeholder="รหัสผู้ดูแล" />
+      <button id="adminLoginBtn" class="primary-btn">เข้าสู่ระบบ</button>
+      <div class="small-note" id="adminError"></div>
+    </div>
+  </div>
+
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="/game.js"></script>
+</body>
+</html>
